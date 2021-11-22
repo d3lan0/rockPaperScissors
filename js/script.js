@@ -1,3 +1,5 @@
+"use strict";
+
 function computerPlay(){
     let play = Math.floor(Math.random()*3)+1;
 
