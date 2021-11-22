@@ -45,8 +45,8 @@ function game (){
 
         do {
             
-            playerSelection = prompt(`Please select rock, paper or scissors`).toLowerCase().toString();
-            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors"){
+            playerSelection = prompt(`Round ${i} Please select rock, paper or scissors...`).toLowerCase().toString();
+            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors" || playerSelection === null){
                 validPlay = true;
             }
         }
