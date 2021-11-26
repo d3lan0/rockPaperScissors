@@ -6,44 +6,52 @@ const cScore = document.querySelector('.computerScore');
 const gameArea = document.querySelector('.gameButtons');
 const remove = document.querySelector('.gameArea p');
 const reset = document.querySelector('footer button');
+const roundCounter = document.querySelector('.round p');
+let roundDiv = document.querySelector('.round');
+let roundTracker = document.querySelectorAll('.round p');
+roundTracker = roundTracker[roundTracker.length-1];
 
 let round = 1;
 let computerScore= 0;
 let playerScore = 0;
 
+roundCounter.textContent = round;
+
 button.forEach(element => {
     element.addEventListener('click', function(e){
         let computer = computerPlay();
         let player = element.id;
-        let thisRound = playRound(computer, player); 
+        let thisRound = playRound(player, computer); 
 
         //checks round to end game
         if (round > 4){
             let winner = checkWinner(computerScore,playerScore)
             gameArea.textContent= winner;
             remove.style.display  = "none";
+            roundDiv.style.display = 'none';
             }
         //plays round
+            roundTracker.textContent = `You played ${player} and the computer played ${computer}.`
         if (thisRound === 'win'){
              playerScore ++;
              round++;
              pScore.textContent = playerScore;
+             roundCounter.textContent = round;
          } else if (thisRound === 'lose'){
             computerScore++;
             round++;
             cScore.textContent = computerScore;
-         } else round++;
-         console.log(`${computerScore} ${playerScore} ${round}`)
+            roundCounter.textContent = round;
+         } else {
+            round++;
+            roundCounter.textContent = round; 
+         }
     })
 });
 
 reset.addEventListener('click', function(){
     location.reload();
 });
-
-//console.log(cScore);
-
-
 
 function computerPlay(){
     let play = Math.floor(Math.random()*3)+1;
