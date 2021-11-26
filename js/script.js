@@ -1,5 +1,50 @@
 "use strict";
 
+const button = document.querySelectorAll('.gameButtons button');
+const pScore = document.querySelector('.playerScore');
+const cScore = document.querySelector('.computerScore');
+const gameArea = document.querySelector('.gameButtons');
+const remove = document.querySelector('.gameArea p');
+const reset = document.querySelector('footer button');
+
+let round = 1;
+let computerScore= 0;
+let playerScore = 0;
+
+button.forEach(element => {
+    element.addEventListener('click', function(e){
+        let computer = computerPlay();
+        let player = element.id;
+        let thisRound = playRound(computer, player); 
+
+        //checks round to end game
+        if (round > 4){
+            let winner = checkWinner(computerScore,playerScore)
+            gameArea.textContent= winner;
+            remove.style.display  = "none";
+            }
+        //plays round
+        if (thisRound === 'win'){
+             playerScore ++;
+             round++;
+             pScore.textContent = playerScore;
+         } else if (thisRound === 'lose'){
+            computerScore++;
+            round++;
+            cScore.textContent = computerScore;
+         } else round++;
+         console.log(`${computerScore} ${playerScore} ${round}`)
+    })
+});
+
+reset.addEventListener('click', function(){
+    location.reload();
+});
+
+//console.log(cScore);
+
+
+
 function computerPlay(){
     let play = Math.floor(Math.random()*3)+1;
 
@@ -13,63 +58,22 @@ function computerPlay(){
 }
 
 function playRound(playerSelection, computerSelection){
-    let win = [`win`,`You win, ${playerSelection} beats ${computerSelection}`];
-    let lose = ['lose',`You lose, ${computerSelection} beats ${playerSelection}`];
-    let draw = ['draw', `It's a draw, you both played ${computerSelection}`];
 
     if (computerSelection === 'rock' && playerSelection === 'scissors'){
-        return lose;
+        return 'lose';
     } else if (computerSelection === 'paper' && playerSelection === 'rock'){
-        return lose;
+        return 'lose';
     } else if (computerSelection === 'scissors' && playerSelection === 'paper'){
-        return lose;
+        return 'lose';
     }else if (computerSelection === playerSelection){
-        return draw;
-    }else return win;
+        return 'draw';
+    }else return 'win';
 }
 
 function checkWinner (computerScore, playerScore){
     if (computerScore > playerScore){
-        return `Computer wins!`;
-    }else if(playerScore >computerScore){
-        return `Player wins!`;
-    } else return `Its a Draw!`;
+        return `You lose!`;
+    }else if(playerScore > computerScore){
+        return `You win!`;
+    } else if ( computerScore === playerScore) return `Its a Draw!`;
 }
-
-function game (){
-    let computerScore = 0;
-    let playerScore = 0;
-
-     for (let i = 1; i <= 5; i++){
-        let validPlay = false;
-        let playerSelection;
-        const computerSelection = computerPlay();
-
-        do {
-            
-            playerSelection = prompt(`Round ${i} Please select rock, paper or scissors...`).toLowerCase().toString();
-            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors" || playerSelection === null){
-                validPlay = true;
-            }
-        }
-
-        while(!validPlay);
-
-        let round = (playRound(playerSelection,computerSelection));
-        
-        if (round[0] === 'win'){
-            console.log(round[1]);
-            playerScore++;
-        } else if(round[0] === 'lose'){
-            console.log(round[1]);
-            computerScore++
-        } else {
-            console.log(round[1]);
-        }
-    }
-    console.log(computerScore);
-    console.log(playerScore);
-    console.log(checkWinner(computerScore, playerScore));
-}
-
-game();

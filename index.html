@@ -3,7 +3,7 @@
     <head>
         <title>Rock Paper Scissors</title>
         <meta charset="UTF-8">
-        <script src="./js/script.js"></script>
+        <script src="./js/script.js" defer></script>
         <link rel="stylesheet" href="./css/style.css">
         
     </head>
@@ -20,9 +20,15 @@
                 <button id="scissors">Scissors</button>
             </div>
             <div id="scores">
-                <h2>Computer Score</h2>
-                <h2>Player Score</h2>
-            </div>
+                <div>
+                    <h2>Your Score</h2>
+                    <p class="playerScore">0</p>
+                </div>
+                <div>
+                    <h2>Computer Score</h2>
+                    <p class="computerScore">0</p>
+                </div>
+             </div>
             
         </section>
         <footer>
